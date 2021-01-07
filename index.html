@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+<title>Brightathlon 2021</title>
+
+<link rel="icon" href="favicon.png" />
+<meta charset="UTF-8">
+<link type="text/css" rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+<image src='logo_cutdown.png' id='icon'>
+
+
+
+<br><br>
+
+<div id='left'>
+  Following the success of LETJOG 2020, the Durnford boys are taking part in a virtual biathlon (running/cycling) to collectively cover the 6000km from Brighton, UK to Brighton, USA.
+<br>
+<br>
+  During this third lockdown, we are all aware of the strain that the pandemic has had on many of our physical and emotional wellbeings, especially on those less fortunate in the community.
+<br>
+<br>
+  In light of this, we are aiming to raise £6000 for two local charities: The Clocktower Sanctuary and The Rockinghorse Foundation, which will go towards helping the homeless in Brighton as well as children at the County Hospital.</div>
+
+<div id='center'>
+
+Please donate whatever you can on our JustGiving page <a href='https://www.justgiving.com/crowdfunding/brightathlon' target="_blank">here</a>
+<br><br>
+
+With your help, we raised an amazing <a id='amtRaised'>£1,000,000</a>
+
+
+Keep up the great work and keep donating!
+
+<br><br>
+
+<a href='https://www.justgiving.com/crowdfunding/brightathlon' target="_blank"><button id='donate'>DONATE!</button></a>
+
+<br><br>
+<br>
+
+</div>
+
+<div id='right'>
+
+So far, we have run 0km and cycled 0km, totalling an amazing <a id='distance'>0km</a>
+
+You can check our progress on the map below ↓
+
+</div>
+
+<br>
+<br><br>
+
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+<div id="Map"></div>
+<script src='main.js'></script>
+<script src="OpenLayers.js"></script>
+<script>
+    var true_brighton_lat            = 50.82165;
+    var true_brighton_lon            = -0.12129;
+
+    var fake_brighton_lat            = 42.5317;
+    var fake_brighton_lon            = -83.7844;
+
+    var center_lat = (true_brighton_lat + fake_brighton_lat) / 2;
+    var center_lat = 90.0;
+    var center_lon = (true_brighton_lon + fake_brighton_lon) / 2;
+
+    var size = new OpenLayers.Size(21,25);//make size a function of zoom
+    var offset = new OpenLayers.Pixel(-(size.w/2), -(size.h/2));
+    var icon1 = new OpenLayers.Icon('flipped_icon.png', size, offset);
+    var icon2 = new OpenLayers.Icon('finish.png', size, offset);
+
+    var icon_completed = new OpenLayers.Icon('icon_completed.png', size, offset);
+    var icon_not_completed = new OpenLayers.Icon('icon_not_completed.png', size, offset);
+
+    var zoom           = 1.2;
+
+    var distance_completed = 100;
+    var total_distance = 6000;
+
+    var steps = 20;
+    var completion_proportion = distance_completed/total_distance;//as a decimal
+
+    var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+    var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+    var true_brighton_position       = new OpenLayers.LonLat(true_brighton_lon, true_brighton_lat).transform( fromProjection, toProjection);
+    var fake_brighton_position       = new OpenLayers.LonLat(fake_brighton_lon, fake_brighton_lat).transform( fromProjection, toProjection);
+    var center_position       = new OpenLayers.LonLat(center_lon, center_lat).transform( fromProjection, toProjection);
+
+
+
+    map = new OpenLayers.Map("Map");
+    var mapnik         = new OpenLayers.Layer.OSM();
+    map.addLayer(mapnik);
+
+    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    map.addLayer(markers);
+    markers.addMarker(new OpenLayers.Marker(true_brighton_position, icon1));
+    markers.addMarker(new OpenLayers.Marker(fake_brighton_position, icon2));
+
+    loop_lat = true_brighton_lat;
+    loop_lon = true_brighton_lon;
+
+    for (var i = 0; i<steps; i++){//for distance travelled?
+
+      loop_lat = loop_lat + (1/steps) * (fake_brighton_lat - true_brighton_lat + 1.2)
+      loop_lon = loop_lon + (1/steps) * (fake_brighton_lon - true_brighton_lon)
+
+      if (i < (completion_proportion * steps)){
+        markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(loop_lon, loop_lat).transform( fromProjection, toProjection), icon_completed.clone()))
+
+      } else {
+      markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(loop_lon, loop_lat).transform( fromProjection, toProjection), icon_not_completed.clone()))
+      }
+
+
+
+    }
+
+    map.setCenter(center_position, zoom);
+
+</script>
+</body>
+</html>

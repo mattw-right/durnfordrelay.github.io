@@ -36,7 +36,7 @@
 Please donate whatever you can on our JustGiving page <a href='https://www.justgiving.com/crowdfunding/brightathlon' target="_blank">here</a>
 <br><br>
 
-With your help, we raised an amazing <a id='amtRaised'>£0</a>
+With your help, we raised an amazing <a id='amtRaised'>£1,000,000</a>
 
 
 Keep up the great work and keep donating!
@@ -53,8 +53,8 @@ Keep up the great work and keep donating!
 <div id='right'>
 
 So far, we have run 0km and cycled 0km, totalling an amazing <a id='distance'>0km</a>
-  
- <iframe id='strava_frame' allowtransparency frameborder='0' height='45%' scrolling='no' src='https://www.strava.com/clubs/818727/latest-rides/33c0f5bec809554605829349c5bfc8e95058483a?show_rides=false' width='100%'></iframe>
+
+<iframe id='strava_frame' allowtransparency frameborder='0' height='45%' scrolling='no' src='https://www.strava.com/clubs/818727/latest-rides/33c0f5bec809554605829349c5bfc8e95058483a?show_rides=false' width='100%'></iframe>
 
 <br>
 
@@ -88,20 +88,21 @@ You can check our progress on the map below ↓
     var center_lat = 90.0;
     var center_lon = (true_brighton_lon + fake_brighton_lon) / 2;
 
-    var size = new OpenLayers.Size(21,25);//make size a function of zoom
+    var size = new OpenLayers.Size(21,25);
+    var icon_size = new OpenLayers.Size(10,10)//make size a function of zoom
     var offset = new OpenLayers.Pixel(-(size.w/2), -(size.h/2));
     var icon1 = new OpenLayers.Icon('flipped_icon.png', size, offset);
     var icon2 = new OpenLayers.Icon('finish.png', size, offset);
 
-    var icon_completed = new OpenLayers.Icon('icon_completed.png', size, offset);
-    var icon_not_completed = new OpenLayers.Icon('icon_not_completed.png', size, offset);
+    var icon_completed = new OpenLayers.Icon('icon_completed.png', icon_size, offset);
+    var icon_not_completed = new OpenLayers.Icon('icon_not_completed.png', icon_size, offset);
 
     var zoom           = 1.2;
 
     var distance_completed = 100;
     var total_distance = 6000;
 
-    var steps = 50;
+    var steps = 30;
     var completion_proportion = distance_completed/total_distance;//as a decimal
 
     var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984

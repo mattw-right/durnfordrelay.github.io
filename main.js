@@ -1,4 +1,4 @@
-document.getElementById('amtRaised').innerHTML = '£' + '0'
+//document.getElementById('amtRaised').innerHTML = '£' + '0'
 
 /*
 

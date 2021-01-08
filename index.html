@@ -127,7 +127,7 @@ You can check our progress on the map below ↓
 
     for (var i = 0; i<steps; i++){//for distance travelled?
 
-      loop_lat = loop_lat + (1/steps) * (fake_brighton_lat - true_brighton_lat + 1.2)
+      loop_lat = loop_lat + (1/steps) * (fake_brighton_lat - true_brighton_lat)
       loop_lon = loop_lon + (1/steps) * (fake_brighton_lon - true_brighton_lon)
 
       if (i < (completion_proportion * steps)){
